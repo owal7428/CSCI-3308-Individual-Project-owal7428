@@ -1,0 +1,25 @@
+h1
+{
+    margin-bottom: 2.5%; 
+    margin-top: 2.5%;
+}
+
+input
+{
+    margin-bottom: 2.5%;
+}
+
+footer 
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #CCCCCC;
+
+}
+
+body
+{
+    padding-bottom: 220px;
+}
