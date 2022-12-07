@@ -36,5 +36,40 @@ app.use(bodyParser.urlencoded({
 // set access for files in /resources folder
 app.use(express.static(__dirname + '/resources'));
 
+app.get("/", (req, res) => {
+    res.redirect("/main");
+});
+
+app.get("/main", (req, res) => {
+    res.render("pages/main", {
+        results: null,
+    });
+});
+
+app.post("/main", (req, res) => {
+    axios({
+        url: 'http://www.themealdb.com/api/json/v1/1/search.php',
+        method: 'GET',
+        dataType:'json',
+        params: {
+            "s": req.body.search,
+        }
+    })
+    .then(results => {
+        console.log(results.data); // the results will be displayed on the terminal if the docker containers are running
+        res.render("pages/main", {
+            results: results.data.meals,
+        });
+    })
+    .catch(error => {
+        // Handle errors
+        res.render("pages/main", {
+            results: null,
+            error: true,
+            message: error.message,
+        });
+    });
+});
+
 app.listen(3000);
 console.log('Server is listening on port 3000');

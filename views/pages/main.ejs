@@ -11,11 +11,38 @@
         </div>
 
         <!--Search functionality-->
+        <% if (results == null) { %>
         <form action="/main" method="POST">
             <label for="search" class="form-label">Search</label>
             <input required type="text" class="form-control" id="search" name="search">
             <button type="submit" class="btn btn-primary" id="submit_button">Search</button>
         </form>
+        <% } %>
+
+        <!--Search results-->
+        <% if (results != null) { %>
+        <% let result = results[0]; %>
+        <div>
+            <h2><%= result.strMeal %></h2>
+            <img src="<%= result.strMealThumb %>" style="width:100%; max-width:400px;">
+            <h4><%= result.strTags %></h3>
+            <p><%= result.strInstructions %></p>
+
+            <!--Only show link to source if it exists-->
+            <% if (result.strSource != "" && result.strSource != null) { %>
+            <a id="avail-text" href="<%= result.strSource %>">Link to source.</a>
+            <% } else { %>
+            <p id="avail-text">Source link not available.</p>
+            <% } %>
+            <br>
+            <!--Only show link to youtube if it exists-->
+            <% if (result.strYoutube != "" && result.strYoutube != null) { %>
+            <a id="avail-text" href="<%= result.strYoutube %>">Link to Youtube.</a>
+            <% } else { %>
+            <p id="avail-text">Youtube link not available.</p>
+            <% } %>
+        </div>
+        <% } %>
     </div>
 </main>
 
