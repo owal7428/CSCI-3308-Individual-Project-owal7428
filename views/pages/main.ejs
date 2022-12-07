@@ -25,7 +25,7 @@
         <div>
             <h2><%= result.strMeal %></h2>
             <img src="<%= result.strMealThumb %>" style="width:100%; max-width:400px;">
-            <h4><%= result.strTags %></h3>
+            <h4><%= result.strTags %></h4>
             <p><%= result.strInstructions %></p>
 
             <!--Only show link to source if it exists-->
@@ -41,6 +41,8 @@
             <% } else { %>
             <p id="avail-text">Youtube link not available.</p>
             <% } %>
+
+            
         </div>
         <% } %>
     </div>
