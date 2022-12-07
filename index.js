@@ -57,9 +57,22 @@ app.post("/main", (req, res) => {
     })
     .then(results => {
         console.log(results.data); // the results will be displayed on the terminal if the docker containers are running
-        res.render("pages/main", {
-            results: results.data.meals,
-        });
+
+        if (results.data.meals == null)
+        {
+            res.render("pages/main", {
+                results: null,
+                error: true,
+                message: req.body.search + " is not in the meals database.",
+            })
+        }
+        else
+        {
+            res.render("pages/main", {
+                results: results.data.meals,
+            });
+        }
+        
     })
     .catch(error => {
         // Handle errors
