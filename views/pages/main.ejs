@@ -1,0 +1,22 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class="container">
+        <h1>Home</h1>
+
+        <!-- Alert message -->
+        <div class="container">
+            <%- include ('../partials/message.ejs') %>
+        </div>
+
+        <!--Search functionality-->
+        <form action="/main" method="POST">
+            <label for="search" class="form-label">Search</label>
+            <input required type="text" class="form-control" id="search" name="search">
+            <button type="submit" class="btn btn-primary" id="submit_button">Search</button>
+        </form>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
