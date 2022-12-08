@@ -48,8 +48,47 @@
             <% } else { %>
             <p id="avail-text">Youtube link not available.</p>
             <% } %>
+            <br>
+            <br>
 
+            <!--Button for the modal-->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#review-modal">
+                Add review
+            </button>
             
+            <!--Modal for reviews-->
+            <div class="modal" tabindex="-1" id = "review-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create Review</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="/reviews" method="POST">
+                            <div class="modal-body">
+                                <!--Recipe Name-->
+                                <div class="row mb-4 align-items-center">
+                                    <label for="recipe-name" class="col-sm-3 form-label">Recipe Name</label>
+                                    <div class="col-sm-9">
+                                        <input readonly type="text" class="form-control" id="recipe-name" name="recipe" placeholder="<%= result.strMeal %>">
+                                    </div>
+                                </div>
+                                <!--Review-->
+                                <div class="row mb-4 align-items-center">
+                                    <label for="review" class="col-sm-3 form-label">Review</label>
+                                    <div class="col-sm-9">
+                                        <textarea required class="form-control" id="review" name="review" placeholder="Write review here..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="submit_button">Create Review</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <% } %>
     </div>
