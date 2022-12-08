@@ -25,7 +25,14 @@
         <div>
             <h2><%= result.strMeal %></h2>
             <img src="<%= result.strMealThumb %>" style="width:100%; max-width:400px;">
+
+            <!--Show tags if they exist-->
+            <% if (result.strTags != null && result.strTags != "") { %>
             <h4><%= result.strTags %></h4>
+            <% } else { %>
+            <h4>No tags available</h4>
+            <% } %>
+
             <p><%= result.strInstructions %></p>
 
             <!--Only show link to source if it exists-->
