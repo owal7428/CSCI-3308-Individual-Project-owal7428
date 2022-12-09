@@ -3,6 +3,22 @@
 
 <main>
     <div class="container">
+        <% if (results == null) { %>
+        <h1>Search for Reviews</h1>
+
+        <!-- Alert message -->
+        <div>
+            <%- include ('../partials/message.ejs') %>
+        </div>
+
+        <form action="/reviewSearch" method="POST">
+            <label for="recipe" class="form-label">Search Reviews for a Recipe</label>
+            <input required type="text" class="form-control" id="recipe" name="recipe">
+            <button type="submit" class="btn btn-primary" id="submit_button">Search</button>
+        </form>
+        <% } %>
+        
+        <% if (results != null) { %>
         <h1>Reviews for <%= recipe %></h1>
 
         <!-- Alert message -->
@@ -22,13 +38,14 @@
                 <% results.forEach(meal => 
                 { %>
                 <tr>
-                    <td><%= meal.recipe %></td>
+                    <td><%= meal.recipe_upper %></td>
                     <td><%= meal.review %></td>
                     <td><%= meal.review_date %></td>
                 </tr>
                 <% }); %>
             </tbody>
         </table>
+        <% } %>
     </div>
 </main>
 

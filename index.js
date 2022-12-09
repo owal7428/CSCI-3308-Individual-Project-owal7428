@@ -84,21 +84,28 @@ app.post("/main", (req, res) => {
     });
 });
 
+app.get("/reviews", (req, res) => {
+    res.render("pages/reviews", {
+        results: null,
+    });
+});
+
 app.post("/reviews", (req, res) => {
     const recipe = req.body.recipe;
+    const recipe_lower = req.body.recipe.toLowerCase();
     const review = req.body.review;
 
     const date = new Date();
 
     const today = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
 
-    const query = "INSERT INTO reviews (recipe, review, review_date) VALUES ($1, $2, $3);";
+    const query = "INSERT INTO reviews (recipe, recipe_upper, review, review_date) VALUES ($1, $2, $3, $4);";
 
-    db.any(query, [recipe, review, today])
+    db.any(query, [recipe_lower, recipe, review, today])
     .then(() => {
         const secondary_query = "SELECT * FROM reviews WHERE recipe = $1;";
 
-        db.any(secondary_query, [recipe])
+        db.any(secondary_query, [recipe_lower])
         .then(results => {
             console.log(results);
             res.render("pages/reviews", {
@@ -108,7 +115,41 @@ app.post("/reviews", (req, res) => {
         });
     })
     .catch(error => {
-        console.log("Failed to insert into reviews table");
+        console.log("Failed to insert into reviews table.");
+        res.render("pages/reviews", {
+            results: null,
+            error: true,
+            message: error.message,
+        });
+    });
+});
+
+app.post("/reviewSearch", (req, res) => {
+    const recipe = req.body.recipe.toLowerCase();
+
+    const query = "SELECT * FROM reviews WHERE recipe = $1;";
+
+    db.any(query, [recipe])
+    .then(results => {
+        console.log(results);
+
+        if (results != null && results.length != 0)
+        {
+            res.render("pages/reviews", {
+                results: results,
+                recipe: results[0].recipe_upper,
+            });
+        }
+        else
+        {
+            res.render("pages/reviews", {
+                results: null,
+                error: true,
+                message: recipe + " does not have reviews or is not a recognized meal.",
+            });
+        }
+    })
+    .catch(error => {
         res.render("pages/reviews", {
             results: null,
             error: true,
