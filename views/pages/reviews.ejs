@@ -1,0 +1,35 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class="container">
+        <h1>Reviews for <%= recipe %></h1>
+
+        <!-- Alert message -->
+        <div>
+            <%- include ('../partials/message.ejs') %>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Recipe</th>
+                    <th>Review</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% results.forEach(meal => 
+                { %>
+                <tr>
+                    <td><%= meal.recipe %></td>
+                    <td><%= meal.review %></td>
+                    <td><%= meal.review_date %></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>

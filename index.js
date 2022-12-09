@@ -64,7 +64,7 @@ app.post("/main", (req, res) => {
                 results: null,
                 error: true,
                 message: req.body.search + " is not in the meals database.",
-            })
+            });
         }
         else
         {
@@ -77,6 +77,39 @@ app.post("/main", (req, res) => {
     .catch(error => {
         // Handle errors
         res.render("pages/main", {
+            results: null,
+            error: true,
+            message: error.message,
+        });
+    });
+});
+
+app.post("/reviews", (req, res) => {
+    const recipe = req.body.recipe;
+    const review = req.body.review;
+
+    const date = new Date();
+
+    const today = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+
+    const query = "INSERT INTO reviews (recipe, review, review_date) VALUES ($1, $2, $3);";
+
+    db.any(query, [recipe, review, today])
+    .then(() => {
+        const secondary_query = "SELECT * FROM reviews WHERE recipe = $1;";
+
+        db.any(secondary_query, [recipe])
+        .then(results => {
+            console.log(results);
+            res.render("pages/reviews", {
+                results: results,
+                recipe: recipe,
+            });
+        });
+    })
+    .catch(error => {
+        console.log("Failed to insert into reviews table");
+        res.render("pages/reviews", {
             results: null,
             error: true,
             message: error.message,
