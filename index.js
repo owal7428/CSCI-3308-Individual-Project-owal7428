@@ -48,7 +48,7 @@ app.get("/main", (req, res) => {
 
 app.post("/main", (req, res) => {
     axios({
-        url: 'http://www.themealdb.com/api/json/v1/1/search.php',
+        url: 'https://www.themealdb.com/api/json/v1/1/search.php',
         method: 'GET',
         dataType:'json',
         params: {
